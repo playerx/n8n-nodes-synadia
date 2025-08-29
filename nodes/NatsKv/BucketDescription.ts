@@ -127,9 +127,16 @@ export const bucketFields: INodeProperties[] = [
 				type: 'number',
 				default: 0,
 				description:
-					'The maximum number of seconds the key should live in the KV. The server will automatically remove keys older than this amount.',
+					'The maximum number of milliseconds the key should live in the KV. The server will automatically remove keys older than this amount.',
 				hint: 'Values older than this will be automatically deleted (0 = no TTL)',
 			},
+			{
+				displayName: 'TTL (Milliseconds)',
+				name: 'markerTTL',
+				type: 'number',
+				default: 0,
+				description: 'Enables Per-Key TTLs and Limit Markers. Should be set to notify `kv watch` query. (0 = no TTL)',
+			}
 		],
 	},
 ];
