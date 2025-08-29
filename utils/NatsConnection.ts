@@ -45,11 +45,17 @@ export type ConnectionMonitoringOptions = {
 	onForceReconnect?: () => void;
 };
 
+let ncCache: NatsConnection
+
 export async function createNatsConnection(
 	credentials: ICredentialDataDecryptedObject,
 	logger: Logger,
 	options?: ConnectionMonitoringOptions,
 ): Promise<NatsConnection> {
+	if (ncCache) {
+		return ncCache
+	}
+
 	const creds = credentials as unknown as NatsCredentials;
 
 	const connectionOptions: ConnectionOptions = {
@@ -108,6 +114,8 @@ export async function createNatsConnection(
 			monitorNatsConnection(nc, logger, options);
 		}
 
+		ncCache = nc
+
 		return nc;
 	} catch (error: any) {
 		// For connection errors, we use NodeApiError when we have a NodeLogger with node context
@@ -127,22 +135,22 @@ export async function createNatsConnection(
 }
 
 export async function closeNatsConnection(nc: NatsConnection, logger: Logger): Promise<void> {
-	try {
-		// Check if connection is still alive before attempting to drain
-		if (nc.isClosed()) {
-			return; // Connection already closed
-		}
+	// try {
+	// 	// Check if connection is still alive before attempting to drain
+	// 	if (nc.isClosed()) {
+	// 		return; // Connection already closed
+	// 	}
 
-		// drain() automatically closes the connection, no need to call close() separately
-		await nc.drain();
-	} catch (error: any) {
-		// Log error but don't throw - connection may already be closed
-		// This is expected behavior during shutdown
-		if (error.message && !error.message.includes('closed')) {
-			// Only log unexpected errors
-			logger.error('Error draining NATS connection:', { error });
-		}
-	}
+	// 	// drain() automatically closes the connection, no need to call close() separately
+	// 	await nc.drain();
+	// } catch (error: any) {
+	// 	// Log error but don't throw - connection may already be closed
+	// 	// This is expected behavior during shutdown
+	// 	if (error.message && !error.message.includes('closed')) {
+	// 		// Only log unexpected errors
+	// 		logger.error('Error draining NATS connection:', { error });
+	// 	}
+	// }
 }
 
 export async function monitorNatsConnection(
