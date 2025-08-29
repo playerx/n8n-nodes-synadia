@@ -131,11 +131,11 @@ export const bucketFields: INodeProperties[] = [
 				hint: 'Values older than this will be automatically deleted (0 = no TTL)',
 			},
 			{
-				displayName: 'TTL (Milliseconds)',
+				displayName: 'Marker TTL (Milliseconds)',
 				name: 'markerTTL',
 				type: 'number',
 				default: 0,
-				description: 'Enables Per-Key TTLs and Limit Markers. Should be set to notify `kv watch` query. (0 = no TTL)',
+				description: 'Enables Limit Markers. Should be set to notify `kv watch` query. (0 = no TTL)',
 			}
 		],
 	},
