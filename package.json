@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-nats-jokio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Synadia NATS nodes for n8n workflow automation",
   "main": "dist/index.js",
   "repository": {
