@@ -122,7 +122,7 @@ export const bucketFields: INodeProperties[] = [
 				description: 'Storage backend for the bucket',
 			},
 			{
-				displayName: 'TTL (Seconds)',
+				displayName: 'TTL (Milliseconds)',
 				name: 'ttl',
 				type: 'number',
 				default: 0,
